@@ -19,5 +19,3 @@
 <p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=siddhi-joshi&show_icons=true&locale=en&layout=compact" alt="siddhi-joshi" /></p>
 
 <p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=siddhi-joshi&show_icons=true&locale=en" alt="siddhi-joshi" /></p>
-
-<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=siddhi-joshi&" alt="siddhi-joshi" /></p>
