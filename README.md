@@ -1,28 +1,12 @@
-# Siddhi Joshi
+<div align="center">
 
-```typescript
-const profile = {
-  name: "Siddhi Joshi",
-  bio: "Developer who loves coding",
-  skills: [
-    "React",
-    "CSS3",
-    "HTML5",
-    "Tailwind",
-    "Node.js",
-    "Express",
-    "MySQL",
-    "SQLite",
-    "React Native",
-    "Android",
-    "JavaScript",
-    "TypeScript",
-    "Python",
-    "Java",
-    "C"
-  ],
-}
-```
+# ✨ Siddhi Joshi ✨
+
+<p><em>Software developer passionate about creating amazing applications</em></p>
+
+<hr>
+
+</div>
 
 ## 👀 Visitor Count
 
@@ -36,63 +20,54 @@ const profile = {
 
 <!-- ⚠️ Important: Replace 'YOUR-USERNAME' with your actual GitHub username in the URL below -->
 <p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=YOUR-USERNAME&theme=onedark&column=7&margin-w=15&margin-h=15" />
+  <img src="https://github-profile-trophy.vercel.app/?username=YOUR-USERNAME&theme=flat&column=7&margin-w=15&margin-h=15" />
 </p>
 
 ## 📊 GitHub Stats
 
 <!-- ⚠️ Important: Replace 'YOUR-USERNAME' with your actual GitHub username in the URL below -->
 <div align="center">
-  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=YOUR-USERNAME&show_icons=true&theme=dark&include_all_commits=true&count_private=true"/>
+  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=YOUR-USERNAME&show_icons=true&theme=buefy&include_all_commits=true&count_private=true"/>
 </div>
 
 ## 🔝 Most Used Languages
 
 <!-- ⚠️ Important: Replace 'YOUR-USERNAME' with your actual GitHub username in the URL below -->
 <div align="center">
-  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=YOUR-USERNAME&layout=compact&langs_count=10&theme=dark"/>
+  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=YOUR-USERNAME&layout=compact&langs_count=10&theme=buefy"/>
 </div>
 
 ## 🔥 Contribution Streak
 
 <!-- ⚠️ Important: Replace 'YOUR-USERNAME' with your actual GitHub username in the URL below -->
 <div align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=YOUR-USERNAME&theme=dark&hide_border=false" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=YOUR-USERNAME&theme=buefy&hide_border=false" />
 </div>
 
 ## 💻 Tech Stack
 
-```json
-{
-  "frontend": [
-    "React",
-    "CSS3",
-    "HTML5",
-    "Tailwind"
-  ],
-  "backend": [
-    "Node.js",
-    "Express",
-    "MySQL",
-    "SQLite"
-  ],
-  "mobile": [
-    "React Native",
-    "Android"
-  ],
-  "languages": [
-    "JavaScript",
-    "TypeScript",
-    "Python",
-    "Java",
-    "C"
-  ]
-}
-```
+<div align="center">
 
-```typescript
-// Thanks for visiting my profile!
-console.log("Let's connect and collaborate on exciting projects!");
+**🎨 Frontend**
 
-process.exit(0); // Until next time 👋
-```
+`React` • `CSS3` • `HTML5` • `Tailwind`
+
+**⚙️ Backend**
+
+`Node.js` • `Express` • `MySQL` • `SQLite`
+
+**📱 Mobile**
+
+`React Native` • `Android`
+
+**💬 Languages**
+
+`JavaScript` • `TypeScript` • `Python` • `Java` • `C`
+
+</div>
+
+<div align="center">
+
+✨ *Thanks for visiting my profile! Have a wonderful day!* ✨
+
+</div>
