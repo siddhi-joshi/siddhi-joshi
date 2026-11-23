@@ -1,10 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 166" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 224" role="img" aria-labelledby="title desc">
 <title id="title">Portfolio</title><desc id="desc">A home for my projects and ideas.</desc>
-<style>text{font-family:Arial,Helvetica,sans-serif}text[font-family^="Georgia"]{font-family:Georgia,serif}text[font-family^="Consolas"]{font-family:Consolas,monospace}.motif{animation:drift 4s ease-in-out infinite}@keyframes drift{50%{transform:translateY(-4px)}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
-<rect width="900" height="166" rx="20" fill="#e2ede8"/><rect x="1" y="1" width="898" height="164" rx="19" fill="none" stroke="#172b34" opacity=".16"/><path d="M28 47H872" stroke="#172b34" opacity=".22"/>
-    <text x="35" y="31" fill="#317879" font-family="Consolas,monospace" font-size="12">01 / WHAT I’M CODING</text>
-    <text x="36" y="96" fill="#172b34" font-family="Georgia,serif" font-size="38">Portfolio</text>
-    <text x="37" y="123" fill="#4d6266" font-size="15">A home for my projects and ideas.</text>
-    <text x="37" y="151" fill="#317879" font-size="11" letter-spacing="1">TYPESCRIPT / WEB</text>
-    <g class="motif"><rect x="709" y="63" width="107" height="67" rx="7" fill="none" stroke="#317879" stroke-width="3"/><path d="M709 77h107m-92 18h34m-34 12h63" stroke="#317879" stroke-width="3"/></g><text x="846" y="98" fill="#317879" font-size="25">↗</text>
+<style>text{font-family:Arial,Helvetica,sans-serif}.serif,.count{font-family:Georgia,'Times New Roman',serif}.mono,.ascii{font-family:Consolas,monospace}.ascii{font-size:8.5px;fill:#333}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+<rect width="350" height="224" rx="18" fill="#dbe6ff"/>
+    <text class="mono" x="26" y="43" font-size="12" letter-spacing="1.5" fill="#3158f4">SELECTED WORK</text>
+    <text class="serif" x="25" y="96" font-size="34" fill="#151515">Portfolio</text>
+    <text x="27" y="138" font-size="15" fill="#444">A home for my projects</text>
+    <text x="27" y="162" font-size="15" fill="#444">and ideas.</text>
+    <path d="M26 185H324" stroke="#151515" opacity=".2"/>
+    <text class="mono" x="27" y="209" font-size="12" fill="#3158f4">TYPESCRIPT / WEB</text>
+    <text class="arrow" x="306" y="209" font-size="20" fill="#3158f4">↗</text>
 </svg>

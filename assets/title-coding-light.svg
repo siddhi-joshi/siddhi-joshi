@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 82" role="img" aria-labelledby="title desc">
+<title id="title">What I&#x27;m coding</title><desc id="desc">Selected repositories.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif}.serif,.count{font-family:Georgia,'Times New Roman',serif}.mono,.ascii{font-family:Consolas,monospace}.ascii{font-size:8.5px;fill:#333}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+<text class="serif" x="8" y="62" font-size="52" fill="#151515">What I’m coding</text><path d="M394 43H1090" stroke="#151515" opacity=".28"/>
+</svg>

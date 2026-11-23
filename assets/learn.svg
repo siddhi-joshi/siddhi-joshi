@@ -1,9 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 246" role="img" aria-labelledby="title desc"><title id="title">Learn</title><desc id="desc">Curiosity in code</desc><style>text{font-family:Arial,Helvetica,sans-serif}text[font-family^="Georgia"]{font-family:Georgia,serif}text[font-family^="Consolas"]{font-family:Consolas,monospace}.icon{animation:hover 4s ease-in-out infinite}.arrow{animation:nudge 3s infinite}@keyframes hover{50%{transform:translateY(-5px)}}@keyframes nudge{50%{transform:translate(3px,-3px)}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style><rect width="280" height="246" rx="18" fill="#f6d9cf"/>
-    <rect x="1" y="1" width="278" height="244" rx="17" fill="none" stroke="#172b34" opacity=".18"/>
-    <path d="M20 46H260M20 199H260" stroke="#172b34" opacity=".22"/>
-    <text x="21" y="31" fill="#172b34" font-family="Consolas,monospace" font-size="11">02 / LEARN</text>
-    <text x="20" y="111" fill="#172b34" font-family="Georgia,serif" font-size="46">Learn</text>
-    <text x="22" y="143" fill="#172b34" font-size="15">Curiosity in code</text>
-    <g class="icon"><path d="M203 82h43v51h-43c-10 0-17-8-17-17V99c0-9 7-17 17-17z" fill="none" stroke="#bb6459" stroke-width="3"/><path d="M201 98h32m-32 12h32m-32 12h19" stroke="#bb6459" stroke-width="2"/></g>
-    <text x="21" y="226" fill="#172b34" font-size="11" letter-spacing="1">JAVA / SPRING BOOT</text>
-    <text class="arrow" x="239" y="229" fill="#c9584e" font-size="24">↗</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 270" role="img" aria-labelledby="title desc">
+<title id="title">Learn</title><desc id="desc">4 tools. Java · Spring Boot · TS · React</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif}.serif,.count{font-family:Georgia,'Times New Roman',serif}.mono,.ascii{font-family:Consolas,monospace}.ascii{font-size:8.5px;fill:#333}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+<rect width="350" height="270" rx="18" fill="#f8c7c2"/>
+    <text class="mono" x="30" y="48" font-size="13" letter-spacing="2" fill="#913d3a">LEARN / 02</text>
+    <text class="serif" x="30" y="118" font-size="43" fill="#913d3a">Learn</text>
+    <text class="count" x="29" y="200" font-family="Georgia,serif" font-size="76" fill="#913d3a">4</text>
+    <text x="83" y="195" font-size="20" fill="#913d3a">tools</text>
+    <path d="M30 218H320" stroke="#913d3a" opacity=".35"/>
+    <text x="30" y="244" font-size="13" fill="#913d3a">Java · Spring Boot · TS · React</text>
+    <text class="arrow" x="307" y="247" font-size="22" fill="#913d3a">↗</text>
+</svg>
