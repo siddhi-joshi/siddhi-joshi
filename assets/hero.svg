@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 525" role="img" aria-labelledby="title desc">
 <title id="title">Siddhi Joshi</title><desc id="desc">Software developer with an animated ASCII-style illustration.</desc>
-<style>text{font-family:Arial,Helvetica,sans-serif}.serif,.count{font-family:Georgia,'Times New Roman',serif}.mono,.ascii{font-family:Consolas,monospace}.ascii{font-size:8.5px;fill:#333}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+<style>text{font-family:Arial,Helvetica,sans-serif}.serif,.count{font-family:Georgia,'Times New Roman',serif}.mono,.ascii{font-family:Consolas,monospace}.ascii{font-size:8.5px;fill:#333}.enter{animation:rise .8s both}.later{animation-delay:.22s}.ascii{animation:print .2s both}@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}@keyframes print{from{opacity:0}to{opacity:1}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
 <rect width="1100" height="525" rx="18" fill="#f5f5f3"/>
     <rect x="60" y="62" width="9" height="9" rx="2" fill="#9baaff"/>
     <text class="mono" x="83" y="72" font-size="14" letter-spacing="2" fill="#6b6b70">SOFTWARE DEVELOPER</text>
