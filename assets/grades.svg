@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 224" role="img" aria-labelledby="title desc">
 <title id="title">Grade calculator</title><desc id="desc">A small Java project for working with grades.</desc>
-<style>text{font-family:Arial,Helvetica,sans-serif}.serif,.count{font-family:Georgia,'Times New Roman',serif}.mono,.ascii{font-family:Consolas,monospace}.ascii{font-size:8.5px;fill:#333}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+<style>text{font-family:Arial,Helvetica,sans-serif}.serif,.count{font-family:Georgia,'Times New Roman',serif}.mono,.ascii{font-family:Consolas,monospace}.ascii{font-size:8.5px;fill:#333}.arrow{animation:nudge 2.8s infinite}@keyframes nudge{50%{transform:translate(3px,-3px)}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
 <rect width="350" height="224" rx="18" fill="#f4e9c6"/>
     <text class="mono" x="26" y="43" font-size="12" letter-spacing="1.5" fill="#876714">SELECTED WORK</text>
     <text class="serif" x="25" y="96" font-size="34" fill="#151515">Grade calculator</text>
