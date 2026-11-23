@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" role="img" aria-labelledby="title desc"><title id="title">Share</title><desc id="desc">Show the process</desc><style>text{font-family:Arial,Helvetica,sans-serif}.art{animation:appear .9s both,drift 4s 1s ease-in-out infinite}@keyframes appear{from{opacity:0;transform:translateY(14px) rotate(-4deg)}to{opacity:1;transform:translateY(0) rotate(0)}}@keyframes drift{50%{transform:translateY(-4px)}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+      <rect width="280" height="240" rx="18" fill="#e9e7cd"/>
+      <rect x="1" y="1" width="278" height="238" rx="17" fill="none" stroke="#4d5c3b" opacity=".25"/>
+      <path d="M22 47H258M22 195H258" stroke="#4d5c3b" opacity=".28"/>
+      <text x="22" y="32" font-size="11" letter-spacing="2" font-weight="bold" fill="#4d5c3b">03 / IN FOCUS</text>
+      <text x="22" y="105" font-family="Georgia,serif" font-size="38" fill="#4d5c3b">Share</text>
+      <text x="22" y="133" font-size="15" fill="#4d5c3b">Show the process</text>
+      <g class="art"><circle cx="216" cy="100" r="28" fill="none" stroke="#839365" stroke-width="3"/><path d="M204 100h24m-11-12 12 12-12 12" fill="none" stroke="#839365" stroke-width="3"/></g>
+      <text x="22" y="220" font-size="11" letter-spacing="1" fill="#4d5c3b">PROJECTS / PORTFOLIO</text>
+      <text x="239" y="221" font-size="22" fill="#4d5c3b">↗</text></svg>

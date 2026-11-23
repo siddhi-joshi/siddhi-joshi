@@ -1,43 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" role="img" aria-labelledby="title desc">
   <title id="title">Siddhi Joshi</title>
-  <desc id="desc">Software developer. Building things, learning things, and sharing the process.</desc>
+  <desc id="desc">Software developer building thoughtful web experiences.</desc>
   <defs>
-    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101c29"/><stop offset="1" stop-color="#182d36"/></linearGradient>
-    <linearGradient id="sun" x2="1" y2="1"><stop stop-color="#ffce9d"/><stop offset="1" stop-color="#ff856e"/></linearGradient>
-    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#ffffff" stroke-opacity=".055"/></pattern>
     <clipPath id="frame"><rect width="900" height="320" rx="22"/></clipPath>
+    <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#7a9a91" opacity=".22"/></pattern>
   </defs>
   <style>
-    text{font-family:Arial,Helvetica,sans-serif}
-    .eyebrow{font-size:13px;font-weight:700;letter-spacing:3px;fill:#a9d3c6}
-    .name{font-family:Georgia,'Times New Roman',serif;font-size:74px;fill:#f7f1e6}
-    .body{font-size:19px;fill:#d6dfd9}
-    .small{font-size:13px;fill:#a9b8b8;letter-spacing:1.2px}
-    .reveal{animation:arrive .9s both}.late{animation-delay:.3s}.later{animation-delay:.55s}
-    .orbit{transform-origin:715px 152px;animation:turn 28s linear infinite}
-    .spark{animation:pulse 3s ease-in-out infinite}
-    @keyframes arrive{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes turn{to{transform:rotate(360deg)}}
-    @keyframes pulse{50%{opacity:.3}}
-    @media (prefers-reduced-motion:reduce){.reveal,.orbit,.spark{animation:none!important}}
+    text{font-family:Arial,Helvetica,sans-serif}.eyebrow{font-size:12px;font-weight:700;letter-spacing:3px;fill:#516c68}.name{font-family:Georgia,'Times New Roman',serif;font-size:75px;fill:#122a34}.body{font-size:20px;fill:#3e5557}.small{font-size:13px;letter-spacing:1.5px;fill:#607774}.arrive{animation:rise .8s both}.delay{animation-delay:.25s}.delay2{animation-delay:.5s}.orbit{transform-origin:735px 157px;animation:turn 28s linear infinite}.spark{animation:pulse 3s ease-in-out infinite}@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}@keyframes turn{to{transform:rotate(360deg)}}@keyframes pulse{50%{opacity:.3}}@media(prefers-reduced-motion:reduce){.arrive,.orbit,.spark{animation:none!important}}
   </style>
   <g clip-path="url(#frame)">
-    <rect width="900" height="320" fill="url(#bg)"/>
-    <rect width="900" height="320" fill="url(#grid)"/>
-    <path d="M0 300H900" stroke="#a9d3c6" stroke-opacity=".22"/>
-    <path d="M548 0V320" stroke="#a9d3c6" stroke-opacity=".15"/>
-    <circle cx="715" cy="152" r="100" fill="none" stroke="#a9d3c6" stroke-opacity=".3"/>
-    <circle cx="715" cy="152" r="74" fill="none" stroke="#a9d3c6" stroke-opacity=".17"/>
-    <g class="orbit"><circle cx="715" cy="52" r="6" fill="#a9d3c6"/><circle cx="715" cy="52" r="13" fill="none" stroke="#a9d3c6" stroke-opacity=".45"/></g>
-    <circle cx="715" cy="152" r="57" fill="url(#sun)"/>
-    <path d="M666 171c26-26 56-30 98-10M673 188c31-18 60-17 84-8" fill="none" stroke="#132532" stroke-opacity=".36" stroke-width="2"/>
-    <circle class="spark" cx="615" cy="226" r="3" fill="#ffce9d"/>
-    <circle class="spark" cx="823" cy="91" r="3" fill="#a9d3c6"/>
-    <text x="48" y="56" class="eyebrow reveal">HELLO, I'M</text>
-    <text x="45" y="142" class="name reveal late">Siddhi Joshi<tspan fill="#ff9c79">.</tspan></text>
-    <text x="49" y="195" class="body reveal later">Building things, learning things,</text>
-    <text x="49" y="225" class="body reveal later">and sharing the process.</text>
-    <text x="49" y="282" class="small reveal later">SOFTWARE DEVELOPER  /  ALWAYS CURIOUS</text>
-    <text x="787" y="282" class="small">01 / 04</text>
+    <rect width="900" height="320" fill="#f5f0e6"/><rect width="900" height="320" fill="url(#dots)"/>
+    <path d="M28 29H872M28 291H872M563 29V291" stroke="#c5d2c7"/>
+    <text x="48" y="60" class="eyebrow arrive">HELLO, I’M</text>
+    <text x="45" y="144" class="name arrive delay">Siddhi Joshi<tspan fill="#e76f62">.</tspan></text>
+    <text x="49" y="194" class="body arrive delay2">I build useful things for the web,</text>
+    <text x="49" y="224" class="body arrive delay2">one thoughtful detail at a time.</text>
+    <text x="49" y="272" class="small arrive delay2">SOFTWARE DEVELOPER  /  ALWAYS LEARNING</text>
+    <circle cx="735" cy="157" r="99" fill="#d9e8db"/><circle cx="735" cy="157" r="75" fill="#122a34"/><circle cx="735" cy="157" r="52" fill="#eaa58b"/>
+    <path d="M690 158c24-24 61-24 90 0M699 177c24-15 51-15 73 0" fill="none" stroke="#122a34" stroke-width="2" opacity=".5"/>
+    <g class="orbit"><circle cx="735" cy="58" r="8" fill="#e76f62"/></g>
+    <circle class="spark" cx="619" cy="98" r="3" fill="#e76f62"/><circle class="spark" cx="841" cy="235" r="4" fill="#122a34"/>
+    <text x="665" y="270" class="small">BUILD / LEARN / SHARE</text>
   </g>
 </svg>

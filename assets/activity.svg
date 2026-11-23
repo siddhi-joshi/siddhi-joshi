@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 290" role="img" aria-labelledby="title desc"><title id="title">GitHub activity</title><desc id="desc">Contribution chart refreshes after the first GitHub Actions run.</desc><style>text{font-family:Arial,Helvetica,sans-serif}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+        <rect width="900" height="290" rx="18" fill="#122a34"/>
+        <path d="M26 28H874M26 261H874" stroke="#64877d" opacity=".5"/>
+        <text x="38" y="55" fill="#aad5c3" font-size="12" letter-spacing="2">GITHUB / ACTIVITY</text>
+        <text x="38" y="117" fill="#f5f0e6" font-family="Georgia,serif" font-size="38">The work, in progress.</text>
+        <text x="39" y="157" fill="#b9cfca" font-size="17">A year of building, learning, and showing up.</text>
+        <text x="39" y="218" fill="#aad5c3" font-size="14">Live contribution chart appears after the first scheduled refresh.</text>
+        <text x="844" y="231" fill="#aad5c3" font-size="25">↗</text></svg>

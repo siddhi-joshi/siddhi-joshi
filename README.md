@@ -1,45 +1,33 @@
 <p align="center">
-  <img src="./assets/hero.svg" alt="Siddhi Joshi — software developer building useful, approachable applications." width="100%" />
+  <img src="./assets/hero.svg" alt="Siddhi Joshi — software developer building thoughtful web experiences." width="100%" />
 </p>
 
 <p align="center">
-  <a href="https://github.com/siddhi-joshi?tab=repositories">Explore my work</a>
+  <a href="https://portfolio-taupe-xi-haojutu7pj.vercel.app">Portfolio</a>
   &nbsp;·&nbsp;
-  <a href="https://portfolio-taupe-xi-haojutu7pj.vercel.app">Visit my portfolio</a>
+  <a href="https://github.com/siddhi-joshi?tab=repositories">All repositories</a>
 </p>
 
 <br />
 
-## Hello, I'm Siddhi 👋
+I turn small ideas into useful, approachable software. Right now I’m exploring **Java**, **Spring Boot**, **TypeScript**, and **React**—and learning by building.
 
-I'm a software developer who enjoys turning ideas into useful, approachable applications. I'm currently learning more about **Java** and **Spring Boot** while building across the web.
-
-### What I'm exploring
-
-<p>
-  <img src="https://img.shields.io/badge/Java-19323a?style=flat-square&logo=openjdk&logoColor=a9d3c6" alt="Java" />
-  <img src="https://img.shields.io/badge/Spring_Boot-19323a?style=flat-square&logo=springboot&logoColor=a9d3c6" alt="Spring Boot" />
-  <img src="https://img.shields.io/badge/TypeScript-19323a?style=flat-square&logo=typescript&logoColor=a9d3c6" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/React-19323a?style=flat-square&logo=react&logoColor=a9d3c6" alt="React" />
-  <img src="https://img.shields.io/badge/Web_development-19323a?style=flat-square&logo=googlechrome&logoColor=a9d3c6" alt="Web development" />
-</p>
-
-## Selected work
-
-<a href="https://github.com/siddhi-joshi/portfolio">
-  <img src="./assets/portfolio.svg" alt="Portfolio — a personal space for my work. Built with TypeScript." width="100%" />
-</a>
-
-<a href="https://github.com/siddhi-joshi/student-feedback-system">
-  <img src="./assets/feedback.svg" alt="Student feedback system — a web project for collecting feedback." width="100%" />
-</a>
-
-<a href="https://github.com/siddhi-joshi/grade-calculator">
-  <img src="./assets/grades.svg" alt="Grade calculator — a Java project." width="100%" />
-</a>
-
-<br />
+### What I’m working on
 
 <p align="center">
-  <sub>Building, learning, and sharing the process — one project at a time.</sub>
+  <a href="https://github.com/siddhi-joshi?tab=repositories"><img src="./assets/build.svg" alt="Build — web applications and useful projects" width="32%" /></a>
+  <a href="https://github.com/siddhi-joshi?tab=repositories"><img src="./assets/learn.svg" alt="Learn — Java and Spring Boot" width="32%" /></a>
+  <a href="https://portfolio-taupe-xi-haojutu7pj.vercel.app"><img src="./assets/share.svg" alt="Share — projects and the process behind them" width="32%" /></a>
 </p>
+
+### The work, in progress
+
+<a href="https://github.com/siddhi-joshi?tab=overview"><img src="./assets/activity.svg" alt="Siddhi’s GitHub contribution activity; opens the live GitHub overview" width="100%" /></a>
+
+### Selected projects
+
+<a href="https://github.com/siddhi-joshi/portfolio"><img src="./assets/portfolio.svg" alt="Portfolio — a home for projects and ideas, built with TypeScript" width="100%" /></a>
+<a href="https://github.com/siddhi-joshi/student-feedback-system"><img src="./assets/feedback.svg" alt="Student feedback system — a web project for collecting feedback" width="100%" /></a>
+<a href="https://github.com/siddhi-joshi/grade-calculator"><img src="./assets/grades.svg" alt="Grade calculator — a Java project for working with grades" width="100%" /></a>
+
+<p align="center"><sub>Building, learning, and sharing the process.</sub></p>
