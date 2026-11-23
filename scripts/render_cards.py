@@ -1,7 +1,8 @@
 """Render self-contained SVG cards from cached GitHub contribution data.
 
 Run with --refresh-data in GitHub Actions. STATIC=1 renders final frames.
-An optional assets/portrait.png or assets/portrait.jpg appears in the hero.
+The hero uses assets/hero-art.jpg as ASCII art. An optional
+assets/portrait.png or assets/portrait.jpg can replace it.
 """
 import argparse
 import base64
@@ -15,11 +16,14 @@ from datetime import date, timedelta
 from html import escape
 from pathlib import Path
 from urllib.request import Request, urlopen
+from PIL import Image, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "cards"
 DATA = ROOT / "data/contributions.json"
 FONT = ROOT / "fonts/geist-source.woff2"
+MONO_FONT = ROOT / "fonts/geist-mono-source.woff2"
+ART = ROOT / "assets/hero-art.jpg"
 STATIC = os.getenv("STATIC") == "1"
 INK, MUTED, LINE = "#000", "#666", "#e5e5e5"
 GLYPHS = ("Siddhi Joshi Creative developer building digital experiences "
@@ -31,19 +35,20 @@ GLYPHS = ("Siddhi Joshi Creative developer building digital experiences "
           "Made one day at a time Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec "
           "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz "
           "0123456789 /:,.+−→↗%·-'")
+ART_GLYPHS = " .:-=+*#%@"
 
 def esc(value):
     return escape(str(value), quote=True)
 
-def font_data():
-    if not FONT.exists():
-        raise FileNotFoundError(FONT)
+def font_data(source=FONT, glyphs=GLYPHS):
+    if not source.exists():
+        raise FileNotFoundError(source)
     with tempfile.TemporaryDirectory() as tmp:
         output = Path(tmp) / "geist.woff"
         try:
-            subprocess.run([sys.executable, "-m", "fontTools.subset", str(FONT), f"--output-file={output}",
+            subprocess.run([sys.executable, "-m", "fontTools.subset", str(source), f"--output-file={output}",
                             "--flavor=woff", "--layout-features=*",
-                            "--text=" + GLYPHS], check=True, capture_output=True, text=True)
+                            "--text=" + glyphs], check=True, capture_output=True, text=True)
         except FileNotFoundError as error:
             raise RuntimeError("Install fonttools and brotli: python -m pip install fonttools brotli") from error
         except subprocess.CalledProcessError as error:
@@ -61,9 +66,9 @@ def font_data():
                 )
                 env = dict(os.environ, PYTHONPATH=str(shim.parent))
                 retry = subprocess.run(
-                    [sys.executable, "-m", "fontTools.subset", str(FONT),
+                    [sys.executable, "-m", "fontTools.subset", str(source),
                      f"--output-file={output}", "--flavor=woff",
-                     "--layout-features=*", "--text=" + GLYPHS],
+                     "--layout-features=*", "--text=" + glyphs],
                     env=env, capture_output=True, text=True,
                 )
                 if retry.returncode:
@@ -72,10 +77,15 @@ def font_data():
                 raise RuntimeError(f"Font subsetting failed: {error.stderr}") from error
         return base64.b64encode(output.read_bytes()).decode("ascii"), "woff"
 
-def card(name, height, title, desc, body, font, motion="", width=1100):
+def card(name, height, title, desc, body, font, motion="", width=1100, mono=None):
     encoded, flavor = font
     css = (f"@font-face{{font-family:GeistCard;src:url(data:font/{flavor};base64," + encoded +
            f") format('{flavor}');font-weight:100 900}}text{{font-family:GeistCard,Arial,sans-serif}}")
+    if mono:
+        mono_data, mono_flavor = mono
+        css += (f"@font-face{{font-family:GeistMonoCard;src:url(data:font/{mono_flavor};base64,"
+                + mono_data + f") format('{mono_flavor}')}}"
+                ".ascii-line{font-family:GeistMonoCard,monospace;white-space:pre}")
     if not STATIC:
         css += motion + ("@media(prefers-reduced-motion:reduce){"
                          "*,*::before,*::after{animation:none!important;transition:none!important}}")
@@ -90,6 +100,30 @@ def heading(text, x=42, y=44):
     return (f'<text x="{x}" y="{y}" font-size="13" font-weight="650" '
             f'letter-spacing="2.3" fill="{MUTED}">{esc(text.upper())}</text>')
 
+def ascii_art():
+    if not ART.exists():
+        raise FileNotFoundError(ART)
+    with Image.open(ART) as image:
+        grey = image.convert("L")
+        pixels = grey.resize((58, 39), Image.Resampling.LANCZOS)
+        edges = grey.filter(ImageFilter.FIND_EDGES).resize((58, 39), Image.Resampling.LANCZOS)
+    ramp = ART_GLYPHS
+    rows = []
+    for row in range(39):
+        chars = []
+        for col in range(58):
+            brightness = max(0, pixels.getpixel((col, row)) - 24) / 231
+            edge = edges.getpixel((col, row)) / 255
+            intensity = min(1, brightness * .87 + edge * .28)
+            chars.append(ramp[min(len(ramp)-1, round(intensity * (len(ramp)-1)))])
+        text = esc("".join(chars))
+        rows.append(
+            f'<text class="ascii-line" x="799" y="{65+row*7.05:.2f}" font-size="7.4" '
+            f'fill="#f4f4f4" xml:space="preserve" style="animation-delay:{.42+row*.014:.3f}s">{text}</text>'
+        )
+    return ('<rect x="793" y="57" width="262" height="286" fill="#231f20"/>'
+            + "".join(rows))
+
 def portrait():
     for filename, mime in (("portrait.png", "image/png"), ("portrait.jpg", "image/jpeg")):
         path = ROOT / "assets" / filename
@@ -99,23 +133,22 @@ def portrait():
                     '</clipPath></defs><image x="793" y="57" width="262" height="286" '
                     f'preserveAspectRatio="xMidYMid slice" clip-path="url(#crop)" '
                     f'href="data:{mime};base64,{data}"/>')
-    return ('<rect x="793" y="57" width="262" height="286" fill="#f5f5f5"/>'
-            '<text x="813" y="105" font-size="26" font-weight="800">SJ</text>'
-            '<path d="M813 284H1035" stroke="#ccc"/>'
-            '<text x="813" y="314" font-size="12" fill="#666">DESIGN · CODE · CURIOSITY</text>')
+    return ascii_art()
 
-def hero(font):
+def hero(font, mono):
     body = (heading("Hello, I'm Siddhi") +
             '<text class="rise" x="40" y="180" font-size="100" font-weight="800" letter-spacing="-6">Siddhi</text>'
             '<text class="rise later" x="39" y="278" font-size="100" font-weight="800" letter-spacing="-6">Joshi</text>'
             '<text class="intro" x="43" y="330" font-size="21" fill="#555">I build thoughtful mobile and web experiences.</text>'
             '<path d="M42 365H1058" stroke="#e5e5e5"/>'
             '<text x="43" y="396" font-size="13" font-weight="650" letter-spacing="1.7">CREATIVE DEVELOPER</text>'
-            '<text x="838" y="396" font-size="13" fill="#666">MEHKAR, INDIA</text>' + portrait())
+            + portrait())
     motion = (".rise{animation:up .75s both}.later{animation-delay:.18s}"
               ".intro{animation:up .7s .36s both}"
+              ".ascii-line{animation:show .18s both}"
+              "@keyframes show{from{opacity:0}to{opacity:1}}"
               "@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}")
-    card("hero.svg", 420, "Siddhi Joshi", "Creative developer building mobile and web experiences.", body, font, motion)
+    card("hero.svg", 420, "Siddhi Joshi", "Creative developer building mobile and web experiences, with ASCII art from Siddhi's image.", body, font, motion, mono=mono)
 
 def tile(name, number, title, detail, delay, font):
     body = (f'<rect x="1" y="1" width="348" height="208" fill="white" stroke="{LINE}"/>' +
@@ -247,7 +280,8 @@ def main():
     else:
         calendar = json.loads(DATA.read_text(encoding="utf-8"))
     font = font_data()
-    hero(font)
+    mono = font_data(MONO_FONT, ART_GLYPHS)
+    hero(font, mono)
     tile("build.svg", 1, "Build", "Explore my projects", .58, font)
     tile("explore.svg", 2, "Explore", "See the portfolio", .72, font)
     tile("connect.svg", 3, "Connect", "Let's talk on LinkedIn", .86, font)
