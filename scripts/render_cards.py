@@ -1,101 +1,144 @@
-"""Render Siddhi's self-contained GitHub profile SVGs.
+"""Render self-contained SVG cards from cached GitHub contribution data.
 
-Run locally with cached data, or set GITHUB_TOKEN to refresh GitHub's
-contribution calendar. Set STATIC=1 to render the final animation frame.
+Run with --refresh-data in GitHub Actions. STATIC=1 renders final frames.
+An optional assets/portrait.png or assets/portrait.jpg appears in the hero.
 """
-
+import argparse
+import base64
 import json
 import os
+import subprocess
+import sys
+import tempfile
 from collections import defaultdict
 from datetime import date, timedelta
 from html import escape
 from pathlib import Path
 from urllib.request import Request, urlopen
 
-
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / "assets"
-DATA = ROOT / "data" / "contributions.json"
+OUT = ROOT / "cards"
+DATA = ROOT / "data/contributions.json"
+FONT = ROOT / "fonts/geist-source.woff2"
 STATIC = os.getenv("STATIC") == "1"
-USER = "siddhi-joshi"
-PAPER = "#f5f5f3"
-INK = "#151515"
-BLUE = "#3158f4"
-RED = "#d94842"
-YELLOW = "#f0c558"
+INK, MUTED, LINE = "#000", "#666", "#e5e5e5"
+GLYPHS = ("Siddhi Joshi Creative developer building digital experiences "
+          "I build thoughtful mobile and web experiences Build Explore Connect "
+          "GitHub Portfolio LinkedIn Monthly activity A year of making things "
+          "Contributions Active days Current streak Busiest day Featured project "
+          "Tic Tac Toe Game Student Feedback System Employee Payroll System "
+          "React Native Expo JavaScript HTML CSS MySQL Java OOP "
+          "Made one day at a time Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec "
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz "
+          "0123456789 /:,.+−→↗%·-'")
 
-
-def e(value):
+def esc(value):
     return escape(str(value), quote=True)
 
-
-def svg(name, width, height, title, description, body, animation=""):
-    css = "" if STATIC else animation
-    content = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">
-<title id="title">{e(title)}</title><desc id="desc">{e(description)}</desc>
-<style>text{{font-family:Arial,Helvetica,sans-serif}}.serif,.count{{font-family:Georgia,'Times New Roman',serif}}.mono,.ascii{{font-family:Consolas,monospace}}.ascii{{font-size:8.5px;fill:#333}}{css}@media(prefers-reduced-motion:reduce){{*{{animation:none!important}}}}</style>
-{body}
-</svg>'''
-    ASSETS.mkdir(exist_ok=True)
-    (ASSETS / name).write_text(content + "\n", encoding="utf-8")
-
-
-def background(width, height, color=PAPER):
-    return f'<rect width="{width}" height="{height}" rx="18" fill="{color}"/>'
-
-
-def ascii_illustration():
-    """A generic character illustration, not an invented likeness of Siddhi."""
-    lines = []
-    for row in range(44):
-        chars = []
-        y = (row - 21) / 21
-        for col in range(58):
-            x = (col - 29) / 29
-            hair = (x / .54) ** 2 + ((y + .18) / .65) ** 2 < 1
-            face = (x / .40) ** 2 + ((y + .08) / .52) ** 2 < 1
-            shoulders = y > .43 and abs(x) < .82 - .34 * (y - .43)
-            if face:
-                value = ":" if (row + col) % 3 else "."
-                if abs(y + .06) < .04 and .12 < abs(x) < .25:
-                    value = "o"
-                if abs(y - .28) < .035 and abs(x) < .17:
-                    value = "-"
-            elif hair:
-                value = "#" if (row + col) % 3 else "+"
-            elif shoulders:
-                value = "=" if (row + col) % 3 else "+"
+def font_data():
+    if not FONT.exists():
+        raise FileNotFoundError(FONT)
+    with tempfile.TemporaryDirectory() as tmp:
+        output = Path(tmp) / "geist.woff"
+        try:
+            subprocess.run([sys.executable, "-m", "fontTools.subset", str(FONT), f"--output-file={output}",
+                            "--flavor=woff", "--layout-features=*",
+                            "--text=" + GLYPHS], check=True, capture_output=True, text=True)
+        except FileNotFoundError as error:
+            raise RuntimeError("Install fonttools and brotli: python -m pip install fonttools brotli") from error
+        except subprocess.CalledProcessError as error:
+            if "No module named brotli" in error.stderr:
+                # Local preview fallback: Node's Brotli decoder lets fontTools read WOFF2.
+                shim = Path(tmp) / "brotli.py"
+                shim.write_text(
+                    "import subprocess\n"
+                    "def decompress(data):\n"
+                    "    return subprocess.run(['node','-e',"
+                    "'const z=require(\"zlib\");let b=[];process.stdin.on(\"data\",c=>b.push(c));"
+                    "process.stdin.on(\"end\",()=>process.stdout.write(z.brotliDecompressSync(Buffer.concat(b))))'],"
+                    "input=data,capture_output=True,check=True).stdout\n",
+                    encoding="utf-8",
+                )
+                env = dict(os.environ, PYTHONPATH=str(shim.parent))
+                retry = subprocess.run(
+                    [sys.executable, "-m", "fontTools.subset", str(FONT),
+                     f"--output-file={output}", "--flavor=woff",
+                     "--layout-features=*", "--text=" + GLYPHS],
+                    env=env, capture_output=True, text=True,
+                )
+                if retry.returncode:
+                    raise RuntimeError(f"Font subsetting failed: {retry.stderr}") from error
             else:
-                value = " "
-            chars.append(value)
-        line = "".join(chars).rstrip()
-        delay = .55 + row * .016
-        lines.append(f'<text class="ascii" style="animation-delay:{delay:.3f}s" x="650" y="{73+row*9.1:.1f}" xml:space="preserve">{e(line)}</text>')
-    return "".join(lines)
+                raise RuntimeError(f"Font subsetting failed: {error.stderr}") from error
+        return base64.b64encode(output.read_bytes()).decode("ascii"), "woff"
 
+def card(name, height, title, desc, body, font, motion="", width=1100):
+    encoded, flavor = font
+    css = (f"@font-face{{font-family:GeistCard;src:url(data:font/{flavor};base64," + encoded +
+           f") format('{flavor}');font-weight:100 900}}text{{font-family:GeistCard,Arial,sans-serif}}")
+    if not STATIC:
+        css += motion + ("@media(prefers-reduced-motion:reduce){"
+                         "*,*::before,*::after{animation:none!important;transition:none!important}}")
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" '
+           f'role="img" aria-labelledby="title desc"><title id="title">{esc(title)}</title>'
+           f'<desc id="desc">{esc(desc)}</desc><style>{css}</style>'
+           f'<rect width="{width}" height="{height}" fill="white"/>{body}</svg>\n')
+    OUT.mkdir(exist_ok=True)
+    (OUT / name).write_text(svg, encoding="utf-8")
 
-def render_hero():
-    body = f'''{background(1100, 525)}
-    <rect x="60" y="62" width="9" height="9" rx="2" fill="#9baaff"/>
-    <text class="mono" x="83" y="72" font-size="14" letter-spacing="2" fill="#6b6b70">SOFTWARE DEVELOPER</text>
-    <text class="serif enter" x="55" y="238" font-size="140" fill="{INK}">Siddhi</text>
-    <text class="serif enter later" x="53" y="363" font-size="140" font-style="italic" fill="{INK}">Joshi</text>
-    <text x="59" y="424" font-size="22" fill="#45454a">I turn ideas into useful, approachable software.</text>
-    <text x="59" y="461" font-size="22" fill="#45454a">Building across the web, one project at a time.</text>
-    <text class="mono" x="60" y="497" font-size="14" fill="{INK}">portfolio</text>
-    <text x="147" y="497" font-size="18" fill="{BLUE}">↗</text>
-    {ascii_illustration()}'''
-    animation = '''.enter{animation:rise .8s both}.later{animation-delay:.22s}.ascii{animation:print .2s both}@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}@keyframes print{from{opacity:0}to{opacity:1}}'''
-    svg("hero.svg", 1100, 525, "Siddhi Joshi", "Software developer with an animated ASCII-style illustration.", body, animation)
+def heading(text, x=42, y=44):
+    return (f'<text x="{x}" y="{y}" font-size="13" font-weight="650" '
+            f'letter-spacing="2.3" fill="{MUTED}">{esc(text.upper())}</text>')
 
+def portrait():
+    for filename, mime in (("portrait.png", "image/png"), ("portrait.jpg", "image/jpeg")):
+        path = ROOT / "assets" / filename
+        if path.exists():
+            data = base64.b64encode(path.read_bytes()).decode("ascii")
+            return ('<defs><clipPath id="crop"><rect x="793" y="57" width="262" height="286" rx="8"/>'
+                    '</clipPath></defs><image x="793" y="57" width="262" height="286" '
+                    f'preserveAspectRatio="xMidYMid slice" clip-path="url(#crop)" '
+                    f'href="data:{mime};base64,{data}"/>')
+    return ('<rect x="793" y="57" width="262" height="286" fill="#f5f5f5"/>'
+            '<text x="813" y="105" font-size="26" font-weight="800">SJ</text>'
+            '<path d="M813 284H1035" stroke="#ccc"/>'
+            '<text x="813" y="314" font-size="12" fill="#666">DESIGN · CODE · CURIOSITY</text>')
+
+def hero(font):
+    body = (heading("Hello, I'm Siddhi") +
+            '<text class="rise" x="40" y="180" font-size="100" font-weight="800" letter-spacing="-6">Siddhi</text>'
+            '<text class="rise later" x="39" y="278" font-size="100" font-weight="800" letter-spacing="-6">Joshi</text>'
+            '<text class="intro" x="43" y="330" font-size="21" fill="#555">I build thoughtful mobile and web experiences.</text>'
+            '<path d="M42 365H1058" stroke="#e5e5e5"/>'
+            '<text x="43" y="396" font-size="13" font-weight="650" letter-spacing="1.7">CREATIVE DEVELOPER</text>'
+            '<text x="838" y="396" font-size="13" fill="#666">MEHKAR, INDIA</text>' + portrait())
+    motion = (".rise{animation:up .75s both}.later{animation-delay:.18s}"
+              ".intro{animation:up .7s .36s both}"
+              "@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}")
+    card("hero.svg", 420, "Siddhi Joshi", "Creative developer building mobile and web experiences.", body, font, motion)
+
+def tile(name, number, title, detail, delay, font):
+    body = (f'<rect x="1" y="1" width="348" height="208" fill="white" stroke="{LINE}"/>' +
+            heading(f"0{number} / {title}", 25, 41) +
+            f'<text class="tile" x="25" y="109" font-size="48" font-weight="760" '
+            f'style="animation-delay:{delay}s">{esc(title)}</text>' +
+            f'<text x="25" y="145" font-size="16" fill="#666">{esc(detail)}</text>' +
+            '<path d="M25 170H325" stroke="#e5e5e5"/>'
+            '<text x="25" y="197" font-size="13" font-weight="650">OPEN LINK</text>'
+            '<path d="M286 185h36m0 0-11-11m11 11-11 11" fill="none" stroke="black" stroke-width="2"/>')
+    motion = (".tile{animation:up .65s both}"
+              "@keyframes up{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}")
+    card(name, 210, title, detail, body, font, motion, width=350)
 
 def fetch_calendar(token):
-    query = '''query($login:String!){user(login:$login){contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{date contributionCount}}}}}}'''
-    request = Request("https://api.github.com/graphql", data=json.dumps({
-        "query": query, "variables": {"login": USER}}).encode(), headers={
-        "Authorization": f"Bearer {token}", "Content-Type": "application/json",
-        "User-Agent": "siddhi-profile-cards"})
-    with urlopen(request, timeout=20) as response:
+    query = ("query($login:String!){user(login:$login){contributionsCollection"
+             "{contributionCalendar{totalContributions weeks{contributionDays"
+             "{date contributionCount}}}}}}")
+    request = Request("https://api.github.com/graphql",
+                      data=json.dumps({"query": query, "variables": {"login": "siddhi-joshi"}}).encode(),
+                      headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json",
+                               "User-Agent": "siddhi-profile-cards"})
+    with urlopen(request, timeout=25) as response:
         payload = json.load(response)
     if payload.get("errors") or not payload.get("data", {}).get("user"):
         raise RuntimeError(f"GitHub contribution query failed: {payload.get('errors', 'user missing')}")
@@ -104,144 +147,115 @@ def fetch_calendar(token):
     DATA.write_text(json.dumps(calendar, indent=2) + "\n", encoding="utf-8")
     return calendar
 
-
 def days(calendar):
     return [day for week in calendar["weeks"] for day in week["contributionDays"]]
 
-
-def render_heatmap(calendar):
-    body = background(1100, 306)
-    body += f'''<text class="serif" x="54" y="78" font-size="47" fill="{INK}">Every day,</text>
-    <text class="serif" x="254" y="78" font-size="47" font-style="italic" fill="{BLUE}">in blue</text>
-    <text class="mono" x="899" y="75" font-size="13" letter-spacing="1.4" fill="#77777d">REFRESHED DAILY</text>'''
-    colors = ["#e6e6e6", "#d2dcff", "#a8bcff", "#7896ff", "#4e73ff", BLUE, "#173bd1"]
-    if calendar:
-        for wi, week in enumerate(calendar["weeks"]):
-            for di, day in enumerate(week["contributionDays"]):
-                count = day["contributionCount"]
-                level = 0 if count == 0 else min(6, 1 + (count >= 2) + (count >= 4) + (count >= 8) + (count >= 16) + (count >= 24))
-                delay = .45 + wi * .012 + di * .025
-                body += f'<rect class="cell" style="animation-delay:{delay:.3f}s" x="{54+wi*18.8:.1f}" y="{120+di*18}" width="15" height="15" rx="3" fill="{colors[level]}"/>'
-        month_positions = {}
-        for wi, week in enumerate(calendar["weeks"]):
-            for day in week["contributionDays"]:
-                key = day["date"][:7]
-                month_positions.setdefault(key, wi)
-        for key, wi in sorted(month_positions.items())[1:]:
-            x = 57 + wi*18.8
-            if x < 800:
-                body += f'<text x="{x:.1f}" y="274" font-size="12" fill="#71717a">{date.fromisoformat(key+"-01").strftime("%b")}</text>'
-    else:
-        body += '<text x="56" y="183" font-size="18" fill="#666">Contribution calendar will appear after the first refresh.</text>'
-    body += '<text class="mono" x="850" y="279" font-size="12" fill="#777">less</text>'
-    for i, color in enumerate(colors[::1]):
-        body += f'<rect x="{892+i*18}" y="266" width="14" height="14" rx="3" fill="{color}"/>'
-    body += '<text class="mono" x="1034" y="279" font-size="12" fill="#777">more</text>'
-    animation = '.cell{animation:pop .35s both}@keyframes pop{from{opacity:0;transform:scale(.45)}to{opacity:1;transform:scale(1)}}'
-    svg("graph.svg", 1100, 306, "Every day, in blue", "Siddhi's GitHub contributions, refreshed daily.", body, animation)
-
-
-def current_streak(day_list):
+def streak(day_list):
     counts = {date.fromisoformat(day["date"]): day["contributionCount"] for day in day_list}
-    if not counts:
-        return 0
-    latest = max(counts)
-    cursor = latest if counts[latest] else latest - timedelta(days=1)
+    last = max(counts)
+    cursor = last if counts[last] else last - timedelta(days=1)
     result = 0
     while counts.get(cursor, 0):
         result += 1
         cursor -= timedelta(days=1)
     return result
 
-
-def render_activity(calendar):
-    body = background(1100, 400)
-    if calendar is None:
-        body += '<text class="serif" x="55" y="91" font-size="44">A year in the making.</text><text x="55" y="160" font-size="20">Real monthly activity appears after the first refresh.</text>'
-        svg("activity.svg", 1100, 400, "Monthly activity", "Waiting for GitHub data.", body)
-        return
+def activity(calendar, font):
     day_list = days(calendar)
-    total = calendar["totalContributions"]
-    active = sum(day["contributionCount"] > 0 for day in day_list)
-    streak = current_streak(day_list)
     monthly = defaultdict(int)
     for day in day_list:
         monthly[day["date"][:7]] += day["contributionCount"]
     keys = sorted(monthly)[-12:]
-    best = max(keys, key=lambda key: monthly[key])
-    top = max(monthly.values()) or 1
-    body += f'''<text class="serif" x="55" y="91" font-size="44" fill="{INK}">A year in the making.</text>
-    <text class="mono" x="866" y="77" font-size="13" letter-spacing="1.4" fill="#777">LAST 12 MONTHS</text>
-    <text class="serif" x="55" y="174" font-size="71" fill="{BLUE}">{total}</text>
-    <text x="{70+len(str(total))*38}" y="172" font-size="19" fill="#555">contributions</text>
-    <path d="M57 315H1044" stroke="#bbb"/>'''
-    for i, key in enumerate(keys):
-        x = 59 + i*84
-        height = max(3, round(109*monthly[key]/top)) if monthly[key] else 3
-        color = BLUE if key == best else "#9baeff"
-        body += f'<rect class="bar" style="animation-delay:{.9+i*.06:.2f}s" x="{x}" y="{315-height}" width="45" height="{height}" rx="3" fill="{color}"/>'
-        body += f'<text x="{x}" y="337" font-size="12" fill="#71717a">{date.fromisoformat(key+"-01").strftime("%b")}</text>'
-    body += f'''<text class="mono" x="57" y="378" font-size="13" fill="#666">{active} ACTIVE DAYS</text>
-    <text class="mono" x="419" y="378" font-size="13" fill="#666">{streak} DAY STREAK</text>
-    <text class="mono" x="781" y="378" font-size="13" fill="#666">BEST MONTH: {date.fromisoformat(best+"-01").strftime("%b").upper()}</text>'''
-    animation = '.bar{transform-box:fill-box;transform-origin:bottom;animation:grow .85s both}@keyframes grow{from{transform:scaleY(.03)}to{transform:scaleY(1)}}'
-    svg("activity.svg", 1100, 400, "Activity in the last year", f"{total} contributions, {active} active days, {streak} day streak.", body, animation)
+    maximum = max(monthly.values()) or 1
+    active = sum(day["contributionCount"] > 0 for day in day_list)
+    busiest = max(day_list, key=lambda day: day["contributionCount"])
+    run = streak(day_list)
+    body = (heading("Monthly activity") +
+            '<text x="42" y="92" font-size="38" font-weight="750" letter-spacing="-1.6">A year of making things.</text>'
+            '<path d="M42 304H1058" stroke="#e5e5e5"/>')
+    for index, key in enumerate(keys):
+        xpos = 48 + index * 84
+        height = round(130 * monthly[key] / maximum)
+        month = date.fromisoformat(key + "-01").strftime("%b").upper()
+        body += (f'<rect class="bar" x="{xpos}" y="{298-height}" width="53" height="{height}" '
+                 f'fill="black" style="animation-delay:{1.2+index*.055:.3f}s"/>'
+                 f'<text x="{xpos}" y="327" font-size="13" fill="#666">{month}</text>'
+                 f'<text x="{xpos}" y="{285-height}" font-size="12" fill="#666">{monthly[key]}</text>')
+    body += '<path d="M42 348H1058" stroke="#e5e5e5"/>'
+    for xpos, value, caption in ((42, calendar["totalContributions"], "CONTRIBUTIONS"),
+                                  (290, active, "ACTIVE DAYS"), (526, run, "CURRENT STREAK"),
+                                  (770, f'{busiest["contributionCount"]} · {busiest["date"][5:]}', "BUSIEST DAY")):
+        body += (f'<text x="{xpos}" y="405" font-size="39" font-weight="760">{esc(value)}</text>'
+                 f'<text x="{xpos}" y="431" font-size="12" letter-spacing="1.6" fill="#666">{caption}</text>')
+    motion = (".bar{transform-box:fill-box;transform-origin:bottom;animation:grow .7s both}"
+              "@keyframes grow{from{transform:scaleY(.02)}to{transform:scaleY(1)}}")
+    card("activity.svg", 460, "Monthly GitHub activity",
+         f'{active} active days, {run} day streak. Busiest day: {busiest["date"]}.', body, font, motion)
 
+def repo(name, title, detail, tags, index, font):
+    body = (f'<rect x="1" y="1" width="1098" height="186" fill="white" stroke="{LINE}"/>' +
+            heading(f"Featured project / 0{index}", 34, 42) +
+            f'<text class="repo" x="32" y="97" font-size="39" font-weight="750" '
+            f'letter-spacing="-1.5" style="animation-delay:{2.05+index*.16:.2f}s">{esc(title)}</text>' +
+            f'<text x="34" y="130" font-size="17" fill="#666">{esc(detail)}</text>' +
+            f'<text x="34" y="165" font-size="12" letter-spacing="1.2">{esc(tags.upper())}</text>'
+            '<path d="M1023 97h36m0 0-13-13m13 13-13 13" fill="none" stroke="black" stroke-width="2.5"/>')
+    motion = (".repo{animation:up .65s both}"
+              "@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}")
+    card(name, 188, title, detail, body, font, motion)
 
-def render_tile(filename, title, number, unit, detail, fill, ink, delay):
-    body = f'''{background(350, 270, fill)}
-    <text class="mono" x="30" y="48" font-size="13" letter-spacing="2" fill="{ink}">{e(title.upper())} / 0{delay}</text>
-    <text class="serif" x="30" y="118" font-size="43" fill="{ink}">{e(title)}</text>
-    <text class="count" x="29" y="200" font-family="Georgia,serif" font-size="76" fill="{ink}">{e(number)}</text>
-    <text x="{38+len(str(number))*45}" y="195" font-size="20" fill="{ink}">{e(unit)}</text>
-    <path d="M30 218H320" stroke="{ink}" opacity=".35"/>
-    <text x="30" y="244" font-size="13" fill="{ink}">{e(detail)}</text>
-    <text class="arrow" x="307" y="247" font-size="22" fill="{ink}">↗</text>'''
-    animation = f'.count{{animation:rise .75s {1.1+delay*.15:.2f}s both}}.arrow{{animation:nudge 2.8s infinite}}@keyframes rise{{from{{opacity:0;transform:translateY(16px)}}to{{opacity:1;transform:translateY(0)}}}}@keyframes nudge{{50%{{transform:translate(3px,-3px)}}}}'
-    svg(filename, 350, 270, title, f"{number} {unit}. {detail}", body, animation)
-
-
-def render_tiles():
-    render_tile("build.svg", "Build", 3, "projects", "Web projects, built by hand", "#c8d7ff", "#173aa0", 1)
-    render_tile("learn.svg", "Learn", 4, "tools", "Java · Spring Boot · TS · React", "#f8c7c2", "#913d3a", 2)
-    render_tile("share.svg", "Share", 1, "portfolio", "Ideas, projects and process", "#f7e5af", "#735c12", 3)
-
-
-def render_title(name, dark):
-    color = "#f5f5f3" if dark else INK
-    body = f'<text class="serif" x="8" y="62" font-size="52" fill="{color}">What I’m coding</text><path d="M394 43H1090" stroke="{color}" opacity=".28"/>'
-    svg(name, 1100, 82, "What I'm coding", "Selected repositories.", body)
-
-
-def render_repo(filename, title, line1, line2, tag, fill, accent):
-    body = f'''{background(350, 224, fill)}
-    <text class="mono" x="26" y="43" font-size="12" letter-spacing="1.5" fill="{accent}">SELECTED WORK</text>
-    <text class="serif" x="25" y="96" font-size="34" fill="{INK}">{e(title)}</text>
-    <text x="27" y="138" font-size="15" fill="#444">{e(line1)}</text>
-    <text x="27" y="162" font-size="15" fill="#444">{e(line2)}</text>
-    <path d="M26 185H324" stroke="{INK}" opacity=".2"/>
-    <text class="mono" x="27" y="209" font-size="12" fill="{accent}">{e(tag)}</text>
-    <text class="arrow" x="306" y="209" font-size="20" fill="{accent}">↗</text>'''
-    animation = '.arrow{animation:nudge 2.8s infinite}@keyframes nudge{50%{transform:translate(3px,-3px)}}'
-    svg(filename, 350, 224, title, f"{line1} {line2}", body, animation)
-
-
-def render_repos():
-    render_repo("portfolio.svg", "Portfolio", "A home for my projects", "and ideas.", "TYPESCRIPT / WEB", "#dbe6ff", BLUE)
-    render_repo("feedback.svg", "Student feedback", "Collect and review", "student feedback.", "WEB / FORMS", "#f9ddd8", RED)
-    render_repo("grades.svg", "Grade calculator", "A small Java project", "for working with grades.", "JAVA / LOGIC", "#f4e9c6", "#876714")
-
+def graph(calendar, font):
+    weeks = calendar["weeks"][-52:]
+    nonzero = sorted(day["contributionCount"] for week in weeks
+                     for day in week["contributionDays"] if day["contributionCount"])
+    thresholds = ([nonzero[int((len(nonzero)-1)*q)] for q in (.25, .5, .75)]
+                  if nonzero else [1, 2, 3])
+    colors = ["#f5f5f5", "#d4d4d4", "#a3a3a3", "#666666", "#000000"]
+    body = (heading("Contribution graph") +
+            '<text x="42" y="92" font-size="37" font-weight="750" letter-spacing="-1.4">Made one day at a time.</text>' +
+            f'<text x="868" y="86" font-size="13" fill="#666">{calendar["totalContributions"]} IN THE PAST YEAR</text>')
+    labels = {}
+    for wi, week in enumerate(weeks):
+        for di, day in enumerate(week["contributionDays"]):
+            count = day["contributionCount"]
+            level = 0 if not count else 1 + sum(count > t for t in thresholds)
+            body += (f'<rect class="cell" x="{43+wi*19.5:.1f}" y="{122+di*19}" width="15" height="15" '
+                     f'rx="2" fill="{colors[level]}" style="animation-delay:{2.65+wi*.012+di*.009:.3f}s"/>')
+            labels.setdefault(day["date"][:7], wi)
+    for key, wi in sorted(labels.items()):
+        xpos = 43 + wi * 19.5
+        if xpos < 1020:
+            month = date.fromisoformat(key + "-01").strftime("%b").upper()
+            body += f'<text x="{xpos:.1f}" y="275" font-size="12" fill="#666">{month}</text>'
+    body += '<text x="42" y="304" font-size="12" fill="#666">LESS</text>'
+    for index, color in enumerate(colors):
+        body += f'<rect x="{88+index*22}" y="291" width="15" height="15" rx="2" fill="{color}"/>'
+    body += '<text x="207" y="304" font-size="12" fill="#666">MORE</text>'
+    motion = ".cell{animation:show .28s both}@keyframes show{from{opacity:0}to{opacity:1}}"
+    card("graph.svg", 330, "GitHub contribution graph",
+         "The past year of GitHub contributions in the site's monochrome palette.", body, font, motion)
 
 def main():
-    calendar = fetch_calendar(os.environ["GITHUB_TOKEN"]) if os.getenv("GITHUB_TOKEN") else (json.loads(DATA.read_text(encoding="utf-8")) if DATA.exists() else None)
-    render_hero()
-    render_heatmap(calendar)
-    render_activity(calendar)
-    render_tiles()
-    render_title("title-coding-light.svg", False)
-    render_title("title-coding-dark.svg", True)
-    render_repos()
-
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--refresh-data", action="store_true")
+    args = parser.parse_args()
+    if args.refresh_data:
+        token = os.getenv("GITHUB_TOKEN")
+        if not token:
+            parser.error("--refresh-data requires GITHUB_TOKEN")
+        calendar = fetch_calendar(token)
+    else:
+        calendar = json.loads(DATA.read_text(encoding="utf-8"))
+    font = font_data()
+    hero(font)
+    tile("build.svg", 1, "Build", "Explore my projects", .58, font)
+    tile("explore.svg", 2, "Explore", "See the portfolio", .72, font)
+    tile("connect.svg", 3, "Connect", "Let's talk on LinkedIn", .86, font)
+    activity(calendar, font)
+    repo("tic-tac-toe.svg", "Tic Tac Toe Game", "A cross-platform mobile game with smooth, responsive play.", "React Native · Expo · JavaScript", 1, font)
+    repo("student-feedback.svg", "Student Feedback System", "Secure feedback collection and automated faculty reports.", "HTML · CSS · JavaScript · MySQL", 2, font)
+    repo("employee-payroll.svg", "Employee Payroll System", "Modular Java payroll calculations for full-time and part-time staff.", "Java · OOP", 3, font)
+    graph(calendar, font)
 
 if __name__ == "__main__":
     main()
