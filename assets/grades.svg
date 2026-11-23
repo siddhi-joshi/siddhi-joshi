@@ -1,11 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 176" role="img" aria-labelledby="title desc">
-  <title id="title">Grade calculator</title><desc id="desc">A Java project for calculating grades.</desc>
-  <style>
-    text{font-family:Arial,Helvetica,sans-serif}.label{font-size:12px;letter-spacing:2px;font-weight:bold;fill:#677244}.title{font-family:Georgia,'Times New Roman',serif;font-size:38px;fill:#2b3438}.detail{font-size:16px;fill:#59624d}.bar{transform-origin:bottom;animation:grow 1.3s ease-out both}.b2{animation-delay:.2s}.b3{animation-delay:.4s}@keyframes grow{from{transform:scaleY(.1)}to{transform:scaleY(1)}}@media(prefers-reduced-motion:reduce){.bar{animation:none}}
-  </style>
-  <rect width="900" height="176" rx="18" fill="#e4e8c9"/><rect x="1" y="1" width="898" height="174" rx="17" fill="none" stroke="#b5bd8e"/>
-  <path d="M22 24H878M22 152H878" stroke="#b1ba89" stroke-opacity=".8"/>
-  <text x="38" y="47" class="label">03 / SELECTED WORK</text><text x="38" y="99" class="title">Grade calculator</text><text x="40" y="128" class="detail">A small Java project for working with grades</text>
-  <path d="M709 121h107" stroke="#6c784a" stroke-width="2"/><rect class="bar" x="724" y="87" width="16" height="34" rx="3" fill="#89945d"/><rect class="bar b2" x="753" y="72" width="16" height="49" rx="3" fill="#6c784a"/><rect class="bar b3" x="782" y="54" width="16" height="67" rx="3" fill="#4e664d"/>
-  <text x="844" y="103" font-size="25" fill="#6c784a">↗</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 166" role="img" aria-labelledby="title desc">
+<title id="title">Grade calculator</title><desc id="desc">A small Java project for working with grades.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif}text[font-family^="Georgia"]{font-family:Georgia,serif}text[font-family^="Consolas"]{font-family:Consolas,monospace}.motif{animation:drift 4s ease-in-out infinite}@keyframes drift{50%{transform:translateY(-4px)}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+<rect width="900" height="166" rx="20" fill="#e9ebcf"/><rect x="1" y="1" width="898" height="164" rx="19" fill="none" stroke="#172b34" opacity=".16"/><path d="M28 47H872" stroke="#172b34" opacity=".22"/>
+    <text x="35" y="31" fill="#697b4b" font-family="Consolas,monospace" font-size="12">03 / WHAT I’M CODING</text>
+    <text x="36" y="96" fill="#172b34" font-family="Georgia,serif" font-size="38">Grade calculator</text>
+    <text x="37" y="123" fill="#4d6266" font-size="15">A small Java project for working with grades.</text>
+    <text x="37" y="151" fill="#697b4b" font-size="11" letter-spacing="1">JAVA / LOGIC</text>
+    <g class="motif"><path d="M709 129h107" stroke="#697b4b" stroke-width="3"/><rect x="724" y="93" width="17" height="36" fill="#aab485"/><rect x="753" y="77" width="17" height="52" fill="#839661"/><rect x="782" y="61" width="17" height="68" fill="#697b4b"/></g><text x="846" y="98" fill="#697b4b" font-size="25">↗</text>
 </svg>

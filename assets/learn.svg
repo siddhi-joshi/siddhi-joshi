@@ -1,10 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" role="img" aria-labelledby="title desc"><title id="title">Learn</title><desc id="desc">Curiosity in code</desc><style>text{font-family:Arial,Helvetica,sans-serif}.art{animation:appear .9s both,drift 4s 1s ease-in-out infinite}@keyframes appear{from{opacity:0;transform:translateY(14px) rotate(-4deg)}to{opacity:1;transform:translateY(0) rotate(0)}}@keyframes drift{50%{transform:translateY(-4px)}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
-      <rect width="280" height="240" rx="18" fill="#f5d9c9"/>
-      <rect x="1" y="1" width="278" height="238" rx="17" fill="none" stroke="#763b39" opacity=".25"/>
-      <path d="M22 47H258M22 195H258" stroke="#763b39" opacity=".28"/>
-      <text x="22" y="32" font-size="11" letter-spacing="2" font-weight="bold" fill="#763b39">02 / IN FOCUS</text>
-      <text x="22" y="105" font-family="Georgia,serif" font-size="38" fill="#763b39">Learn</text>
-      <text x="22" y="133" font-size="15" fill="#763b39">Curiosity in code</text>
-      <g class="art"><path d="M211 75c-19 0-27 12-27 27s8 26 27 26h25v-53z" fill="none" stroke="#b36253" stroke-width="3"/><path d="M202 91h25m-25 12h25m-25 12h18" stroke="#b36253" stroke-width="2"/></g>
-      <text x="22" y="220" font-size="11" letter-spacing="1" fill="#763b39">JAVA / SPRING BOOT</text>
-      <text x="239" y="221" font-size="22" fill="#763b39">↗</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 246" role="img" aria-labelledby="title desc"><title id="title">Learn</title><desc id="desc">Curiosity in code</desc><style>text{font-family:Arial,Helvetica,sans-serif}text[font-family^="Georgia"]{font-family:Georgia,serif}text[font-family^="Consolas"]{font-family:Consolas,monospace}.icon{animation:hover 4s ease-in-out infinite}.arrow{animation:nudge 3s infinite}@keyframes hover{50%{transform:translateY(-5px)}}@keyframes nudge{50%{transform:translate(3px,-3px)}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style><rect width="280" height="246" rx="18" fill="#f6d9cf"/>
+    <rect x="1" y="1" width="278" height="244" rx="17" fill="none" stroke="#172b34" opacity=".18"/>
+    <path d="M20 46H260M20 199H260" stroke="#172b34" opacity=".22"/>
+    <text x="21" y="31" fill="#172b34" font-family="Consolas,monospace" font-size="11">02 / LEARN</text>
+    <text x="20" y="111" fill="#172b34" font-family="Georgia,serif" font-size="46">Learn</text>
+    <text x="22" y="143" fill="#172b34" font-size="15">Curiosity in code</text>
+    <g class="icon"><path d="M203 82h43v51h-43c-10 0-17-8-17-17V99c0-9 7-17 17-17z" fill="none" stroke="#bb6459" stroke-width="3"/><path d="M201 98h32m-32 12h32m-32 12h19" stroke="#bb6459" stroke-width="2"/></g>
+    <text x="21" y="226" fill="#172b34" font-size="11" letter-spacing="1">JAVA / SPRING BOOT</text>
+    <text class="arrow" x="239" y="229" fill="#c9584e" font-size="24">↗</text></svg>

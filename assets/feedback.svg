@@ -1,12 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 176" role="img" aria-labelledby="title desc">
-  <title id="title">Student feedback system</title><desc id="desc">A web project for collecting student feedback.</desc>
-  <style>
-    text{font-family:Arial,Helvetica,sans-serif}.label{font-size:12px;letter-spacing:2px;font-weight:bold;fill:#7b4440}.title{font-family:Georgia,'Times New Roman',serif;font-size:36px;fill:#2b3438}.detail{font-size:16px;fill:#555f5f}.bubble{animation:rise 3.5s ease-in-out infinite}.bubble2{animation-delay:.5s}@keyframes rise{50%{transform:translateY(-6px)}}@media(prefers-reduced-motion:reduce){.bubble{animation:none}}
-  </style>
-  <rect width="900" height="176" rx="18" fill="#f4d6c7"/><rect x="1" y="1" width="898" height="174" rx="17" fill="none" stroke="#d39e8c"/>
-  <path d="M22 24H878M22 152H878" stroke="#ca9989" stroke-opacity=".7"/>
-  <text x="38" y="47" class="label">02 / SELECTED WORK</text><text x="38" y="99" class="title">Student feedback system</text><text x="40" y="128" class="detail">A web project for collecting feedback</text>
-  <g class="bubble"><path d="M711 52h78a11 11 0 0 1 11 11v45a11 11 0 0 1-11 11h-42l-18 13v-13h-18a11 11 0 0 1-11-11V63a11 11 0 0 1 11-11Z" fill="#d87769"/><path d="M722 78h55m-55 16h37" stroke="#fff4e7" stroke-width="5" stroke-linecap="round"/></g>
-  <g class="bubble bubble2"><circle cx="815" cy="57" r="13" fill="#f8a987"/><path d="M809 57l4 4 8-9" fill="none" stroke="#713e3b" stroke-width="2.5" stroke-linecap="round"/></g>
-  <text x="844" y="103" font-size="25" fill="#874e45">↗</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 166" role="img" aria-labelledby="title desc">
+<title id="title">Student feedback system</title><desc id="desc">A simple way to collect and review feedback.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif}text[font-family^="Georgia"]{font-family:Georgia,serif}text[font-family^="Consolas"]{font-family:Consolas,monospace}.motif{animation:drift 4s ease-in-out infinite}@keyframes drift{50%{transform:translateY(-4px)}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+<rect width="900" height="166" rx="20" fill="#f5ddd4"/><rect x="1" y="1" width="898" height="164" rx="19" fill="none" stroke="#172b34" opacity=".16"/><path d="M28 47H872" stroke="#172b34" opacity=".22"/>
+    <text x="35" y="31" fill="#ad5b53" font-family="Consolas,monospace" font-size="12">02 / WHAT I’M CODING</text>
+    <text x="36" y="96" fill="#172b34" font-family="Georgia,serif" font-size="38">Student feedback system</text>
+    <text x="37" y="123" fill="#4d6266" font-size="15">A simple way to collect and review feedback.</text>
+    <text x="37" y="151" fill="#ad5b53" font-size="11" letter-spacing="1">WEB / FORMS</text>
+    <g class="motif"><path d="M712 66h104v62h-53l-18 12v-12h-33z" fill="none" stroke="#ad5b53" stroke-width="3"/><path d="M729 86h68m-68 15h46" stroke="#ad5b53" stroke-width="3"/></g><text x="846" y="98" fill="#ad5b53" font-size="25">↗</text>
 </svg>

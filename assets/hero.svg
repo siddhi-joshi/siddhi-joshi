@@ -1,25 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" role="img" aria-labelledby="title desc">
-  <title id="title">Siddhi Joshi</title>
-  <desc id="desc">Software developer building thoughtful web experiences.</desc>
-  <defs>
-    <clipPath id="frame"><rect width="900" height="320" rx="22"/></clipPath>
-    <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#7a9a91" opacity=".22"/></pattern>
-  </defs>
-  <style>
-    text{font-family:Arial,Helvetica,sans-serif}.eyebrow{font-size:12px;font-weight:700;letter-spacing:3px;fill:#516c68}.name{font-family:Georgia,'Times New Roman',serif;font-size:75px;fill:#122a34}.body{font-size:20px;fill:#3e5557}.small{font-size:13px;letter-spacing:1.5px;fill:#607774}.arrive{animation:rise .8s both}.delay{animation-delay:.25s}.delay2{animation-delay:.5s}.orbit{transform-origin:735px 157px;animation:turn 28s linear infinite}.spark{animation:pulse 3s ease-in-out infinite}@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}@keyframes turn{to{transform:rotate(360deg)}}@keyframes pulse{50%{opacity:.3}}@media(prefers-reduced-motion:reduce){.arrive,.orbit,.spark{animation:none!important}}
-  </style>
-  <g clip-path="url(#frame)">
-    <rect width="900" height="320" fill="#f5f0e6"/><rect width="900" height="320" fill="url(#dots)"/>
-    <path d="M28 29H872M28 291H872M563 29V291" stroke="#c5d2c7"/>
-    <text x="48" y="60" class="eyebrow arrive">HELLO, I’M</text>
-    <text x="45" y="144" class="name arrive delay">Siddhi Joshi<tspan fill="#e76f62">.</tspan></text>
-    <text x="49" y="194" class="body arrive delay2">I build useful things for the web,</text>
-    <text x="49" y="224" class="body arrive delay2">one thoughtful detail at a time.</text>
-    <text x="49" y="272" class="small arrive delay2">SOFTWARE DEVELOPER  /  ALWAYS LEARNING</text>
-    <circle cx="735" cy="157" r="99" fill="#d9e8db"/><circle cx="735" cy="157" r="75" fill="#122a34"/><circle cx="735" cy="157" r="52" fill="#eaa58b"/>
-    <path d="M690 158c24-24 61-24 90 0M699 177c24-15 51-15 73 0" fill="none" stroke="#122a34" stroke-width="2" opacity=".5"/>
-    <g class="orbit"><circle cx="735" cy="58" r="8" fill="#e76f62"/></g>
-    <circle class="spark" cx="619" cy="98" r="3" fill="#e76f62"/><circle class="spark" cx="841" cy="235" r="4" fill="#122a34"/>
-    <text x="665" y="270" class="small">BUILD / LEARN / SHARE</text>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 330" role="img" aria-labelledby="title desc">
+<title id="title">Siddhi Joshi</title><desc id="desc">Software developer building, learning and sharing. Animated SJ text mark.</desc>
+<style>text{font-family:Arial,Helvetica,sans-serif}text[font-family^="Georgia"]{font-family:Georgia,serif}text[font-family^="Consolas"]{font-family:Consolas,monospace}.print{animation:print .12s both}.rise{animation:rise .75s both}.late{animation-delay:.28s}.later{animation-delay:.55s}.ring{animation:pulse 4s ease-in-out infinite}@keyframes print{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{50%{opacity:.55;transform:scale(1.06)}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>
+<rect width="900" height="330" rx="20" fill="#f4efe5"/><rect x="1" y="1" width="898" height="328" rx="19" fill="none" stroke="#172b34" opacity=".16"/><path d="M28 66H872" stroke="#172b34" opacity=".22"/><path d="M28 302H872" stroke="#172b34" opacity=".22"/>
+    <text x="34" y="47" font-family="Consolas,monospace" font-size="14" fill="#172b34" opacity=".72">siddhi@github ~ $ whoami</text>
+    <path d="M360 66V302" stroke="#172b34" opacity=".22"/>
+    <rect x="52" y="90" width="282" height="193" rx="12" fill="#e4e9e8"/>
+    <circle class="ring" cx="193" cy="187" r="100" fill="none" stroke="#4267c7" opacity=".18"/>
+    <text class="print" style="animation-delay:0.22s" x="69" y="126" font-family="Consolas,monospace" font-size="22" font-weight="bold" xml:space="preserve" fill="#4267c7">  SSSSS   JJJJJ  </text><text class="print" style="animation-delay:0.34s" x="69" y="146" font-family="Consolas,monospace" font-size="22" font-weight="bold" xml:space="preserve" fill="#4267c7"> SS         JJ    </text><text class="print" style="animation-delay:0.46s" x="69" y="166" font-family="Consolas,monospace" font-size="22" font-weight="bold" xml:space="preserve" fill="#4267c7"> SS         JJ    </text><text class="print" style="animation-delay:0.58s" x="69" y="186" font-family="Consolas,monospace" font-size="22" font-weight="bold" xml:space="preserve" fill="#4267c7">  SSSS      JJ    </text><text class="print" style="animation-delay:0.70s" x="69" y="206" font-family="Consolas,monospace" font-size="22" font-weight="bold" xml:space="preserve" fill="#4267c7">     SS     JJ    </text><text class="print" style="animation-delay:0.82s" x="69" y="226" font-family="Consolas,monospace" font-size="22" font-weight="bold" xml:space="preserve" fill="#4267c7">     SS  J  JJ    </text><text class="print" style="animation-delay:0.94s" x="69" y="246" font-family="Consolas,monospace" font-size="22" font-weight="bold" xml:space="preserve" fill="#4267c7"> SSSSS    JJJ     </text>
+    <text x="391" y="130" fill="#172b34" font-family="Georgia,serif" font-size="67" class="rise">Siddhi</text>
+    <text x="391" y="201" fill="#172b34" font-family="Georgia,serif" font-size="67" class="rise late">Joshi<tspan fill="#c9584e">.</tspan></text>
+    <text x="395" y="244" fill="#425b5f" font-size="19" class="rise later">I turn ideas into useful software.</text>
+    <text x="395" y="275" fill="#617777" font-size="14" class="rise later">BUILDING  /  LEARNING  /  SHARING</text>
+    <text x="33" y="320" fill="#627879" font-size="11" letter-spacing="2">SOFTWARE DEVELOPER</text>
 </svg>
