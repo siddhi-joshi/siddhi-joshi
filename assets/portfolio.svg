@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 176" role="img" aria-labelledby="title desc">
+  <title id="title">Portfolio</title><desc id="desc">A personal space for my work, built with TypeScript.</desc>
+  <style>
+    text{font-family:Arial,Helvetica,sans-serif}.label{font-size:12px;letter-spacing:2px;font-weight:bold;fill:#b9cfd0}.title{font-family:Georgia,'Times New Roman',serif;font-size:38px;fill:#f7f1e6}.detail{font-size:16px;fill:#d3dedc}.icon{animation:float 4s ease-in-out infinite}.line{animation:draw 1.5s ease-out both;stroke-dasharray:140;stroke-dashoffset:140}@keyframes float{50%{transform:translateY(-5px)}}@keyframes draw{to{stroke-dashoffset:0}}@media(prefers-reduced-motion:reduce){.icon,.line{animation:none;stroke-dashoffset:0}}
+  </style>
+  <rect width="900" height="176" rx="18" fill="#19323a"/><rect x="1" y="1" width="898" height="174" rx="17" fill="none" stroke="#42605f"/>
+  <path d="M22 24H878M22 152H878" stroke="#44615d" stroke-opacity=".55"/>
+  <text x="38" y="47" class="label">01 / SELECTED WORK</text><text x="38" y="99" class="title">Portfolio</text><text x="40" y="128" class="detail">A home for my projects and ideas  ·  TypeScript</text>
+  <g class="icon"><rect x="708" y="46" width="108" height="78" rx="9" fill="#a9d3c6"/><path d="M708 68h108" stroke="#19323a" stroke-width="2"/><circle cx="722" cy="57" r="3" fill="#19323a"/><circle cx="733" cy="57" r="3" fill="#19323a"/><path class="line" d="M726 91h33m-33 12h61" stroke="#19323a" stroke-width="4" stroke-linecap="round"/></g>
+  <text x="844" y="103" font-size="25" fill="#a9d3c6">↗</text>
+</svg>

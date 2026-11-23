@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 176" role="img" aria-labelledby="title desc">
+  <title id="title">Student feedback system</title><desc id="desc">A web project for collecting student feedback.</desc>
+  <style>
+    text{font-family:Arial,Helvetica,sans-serif}.label{font-size:12px;letter-spacing:2px;font-weight:bold;fill:#7b4440}.title{font-family:Georgia,'Times New Roman',serif;font-size:36px;fill:#2b3438}.detail{font-size:16px;fill:#555f5f}.bubble{animation:rise 3.5s ease-in-out infinite}.bubble2{animation-delay:.5s}@keyframes rise{50%{transform:translateY(-6px)}}@media(prefers-reduced-motion:reduce){.bubble{animation:none}}
+  </style>
+  <rect width="900" height="176" rx="18" fill="#f4d6c7"/><rect x="1" y="1" width="898" height="174" rx="17" fill="none" stroke="#d39e8c"/>
+  <path d="M22 24H878M22 152H878" stroke="#ca9989" stroke-opacity=".7"/>
+  <text x="38" y="47" class="label">02 / SELECTED WORK</text><text x="38" y="99" class="title">Student feedback system</text><text x="40" y="128" class="detail">A web project for collecting feedback</text>
+  <g class="bubble"><path d="M711 52h78a11 11 0 0 1 11 11v45a11 11 0 0 1-11 11h-42l-18 13v-13h-18a11 11 0 0 1-11-11V63a11 11 0 0 1 11-11Z" fill="#d87769"/><path d="M722 78h55m-55 16h37" stroke="#fff4e7" stroke-width="5" stroke-linecap="round"/></g>
+  <g class="bubble bubble2"><circle cx="815" cy="57" r="13" fill="#f8a987"/><path d="M809 57l4 4 8-9" fill="none" stroke="#713e3b" stroke-width="2.5" stroke-linecap="round"/></g>
+  <text x="844" y="103" font-size="25" fill="#874e45">↗</text>
+</svg>

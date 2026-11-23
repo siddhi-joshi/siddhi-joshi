@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 176" role="img" aria-labelledby="title desc">
+  <title id="title">Grade calculator</title><desc id="desc">A Java project for calculating grades.</desc>
+  <style>
+    text{font-family:Arial,Helvetica,sans-serif}.label{font-size:12px;letter-spacing:2px;font-weight:bold;fill:#677244}.title{font-family:Georgia,'Times New Roman',serif;font-size:38px;fill:#2b3438}.detail{font-size:16px;fill:#59624d}.bar{transform-origin:bottom;animation:grow 1.3s ease-out both}.b2{animation-delay:.2s}.b3{animation-delay:.4s}@keyframes grow{from{transform:scaleY(.1)}to{transform:scaleY(1)}}@media(prefers-reduced-motion:reduce){.bar{animation:none}}
+  </style>
+  <rect width="900" height="176" rx="18" fill="#e4e8c9"/><rect x="1" y="1" width="898" height="174" rx="17" fill="none" stroke="#b5bd8e"/>
+  <path d="M22 24H878M22 152H878" stroke="#b1ba89" stroke-opacity=".8"/>
+  <text x="38" y="47" class="label">03 / SELECTED WORK</text><text x="38" y="99" class="title">Grade calculator</text><text x="40" y="128" class="detail">A small Java project for working with grades</text>
+  <path d="M709 121h107" stroke="#6c784a" stroke-width="2"/><rect class="bar" x="724" y="87" width="16" height="34" rx="3" fill="#89945d"/><rect class="bar b2" x="753" y="72" width="16" height="49" rx="3" fill="#6c784a"/><rect class="bar b3" x="782" y="54" width="16" height="67" rx="3" fill="#4e664d"/>
+  <text x="844" y="103" font-size="25" fill="#6c784a">↗</text>
+</svg>
